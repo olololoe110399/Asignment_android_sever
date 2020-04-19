@@ -27,4 +27,13 @@ class LoginFragment : Fragment() {
         view.view_pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(view.tabs))
         view.tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(view.view_pager))
     }
+    private object HOLDER {
+        val INSTANCE = LoginFragment()
+    }
+
+    companion object {
+        val instance: LoginFragment by lazy {
+            HOLDER.INSTANCE
+        }
+    }
 }

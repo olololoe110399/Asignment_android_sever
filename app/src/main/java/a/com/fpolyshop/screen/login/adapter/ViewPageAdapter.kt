@@ -13,8 +13,8 @@ class ViewPageAdapter(fragmentManager: FragmentManager?) :
     override fun getItem(position: Int): Fragment {
         var fragment: Fragment? = null
         when (position) {
-            0 -> fragment = SignInFragment.getInstance()
-            1 -> fragment = SignUpFragment.getInstance()
+            0 -> fragment = SignInFragment.instance
+            1 -> fragment = SignUpFragment.instance
         }
         return fragment!!
     }

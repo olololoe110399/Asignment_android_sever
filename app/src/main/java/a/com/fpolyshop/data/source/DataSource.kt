@@ -1,8 +1,9 @@
 package a.com.fpolyshop.data.source
 
+import a.com.fpolyshop.data.models.Category
 import a.com.fpolyshop.data.models.User
-import a.com.fpolyshop.data.source.remote.response.StatusResponse
-import a.com.fpolyshop.data.source.remote.response.UserResponse
+import a.com.fpolyshop.data.source.remote.response.*
+import io.reactivex.Flowable
 import io.reactivex.Observable
 
 interface DataSource {
@@ -10,6 +11,7 @@ interface DataSource {
      * Local
      */
     interface Local {
+        fun getCategories(): Flowable<List<Category>>
 
     }
 
@@ -29,5 +31,11 @@ interface DataSource {
         fun getProfile(
             username: String, password: String
         ): Observable<UserResponse>
+
+        fun getGenres(): Observable<GenreResponse>
+
+        fun getProducers(): Observable<ProducerResponse>
+
+        fun getProducts(type: String, query: String): Observable<ProductResponse>
     }
 }

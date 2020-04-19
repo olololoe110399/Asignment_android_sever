@@ -29,10 +29,9 @@ class SplashFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Handler().postDelayed({
             if (checkLogin()) {
-                activity?.loadNoBackStack(ContainerFragment())
-                activity?.showSnackBarMsg(resources.getString(R.string.login_success))
+                activity?.loadNoBackStack(ContainerFragment.instance)
             } else {
-                activity?.loadTransition(LoginFragment(), view.logo_linear)
+                activity?.loadTransition(LoginFragment.instance, view.logo_linear)
             }
         }, Constant.BASE_TIME_DELAY.toLong())
     }

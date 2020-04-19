@@ -22,6 +22,7 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
+                    android:background="@drawable/cover"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     app:layout_constraintDimensionRatio="W,0.6"
@@ -44,7 +45,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/gradient_bg"></androidx.constraintlayout.widget.ConstraintLayout>
+                        android:background="@color/colorDarkBlue"></androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -61,6 +62,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:drawableTint="@color/colorOrange"
                     android:id="@+id/usernameEdt"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_45"
@@ -78,6 +80,7 @@
 
                 <TextView
                     android:id="@+id/full_nameEdt"
+                    android:drawableTint="@color/colorOrange"
 
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_45"
@@ -95,6 +98,7 @@
 
                 <TextView
                     android:id="@+id/birthEdt"
+                    android:drawableTint="@color/colorOrange"
 
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_45"
@@ -114,6 +118,7 @@
 
                 <TextView
                     android:id="@+id/phoneEdt"
+                    android:drawableTint="@color/colorOrange"
 
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_45"
@@ -132,6 +137,7 @@
                     app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
+                    android:drawableTint="@color/colorOrange"
                     android:id="@+id/addressEdt"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_45"

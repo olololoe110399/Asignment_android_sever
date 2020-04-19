@@ -95,6 +95,7 @@
             android:background="@drawable/ic_gg" />
 
         <ImageView
+
             android:layout_width="@dimen/dp_45"
             android:layout_height="@dimen/dp_45"
             android:layout_marginStart="@dimen/dp_16"
@@ -102,7 +103,9 @@
     </LinearLayout>
 
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         android:textColor="@android:color/white"
         android:id="@+id/loginBtn"
         android:layout_width="match_parent"

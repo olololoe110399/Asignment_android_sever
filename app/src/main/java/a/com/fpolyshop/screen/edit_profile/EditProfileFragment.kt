@@ -25,6 +25,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.dialog_menu_add_images_bottomsheet.view.*
 import kotlinx.android.synthetic.main.fragment_edit_profile.view.*
@@ -45,8 +46,8 @@ class EditProfileFragment private constructor() : Fragment(), EditProfileContrac
         context?.let {
             val movieRepository: Repository =
                 Repository.getInstance(
-                    RemoteDataSource.getInstance(),
-                    LocalDataSource.getInstance()
+                    RemoteDataSource.instance,
+                    LocalDataSource.instance
                 )
             presenter = EditProfilePresenter(movieRepository)
         }
@@ -63,47 +64,41 @@ class EditProfileFragment private constructor() : Fragment(), EditProfileContrac
     }
 
     override fun onStatusSuccess(status: String) {
-        when (status) {
-            "Success" -> {
-                bitmap = null
-                activity?.let {
-                    view?.run {
-                        if (checkLogin()) {
-                            it.rememberUser(
-                                usernameEdt.text.toString(),
-                                passwordEdt.text.toString(),
-                                true
-                            )
-                        } else {
-                            it.rememberUser(
-                                usernameEdt.text.toString(),
-                                passwordEdt.text.toString(),
-                                false
-                            )
-                        }
-
-                        usernameEdt.text.clear()
-                        passwordEdt.text.clear()
-                        confirm_passwordEdt.text.clear()
-                        full_nameEdt.text.clear()
-                        birthEdt.text.clear()
-                        phoneEdt.text.clear()
-                        addressEdt.text.clear()
+        if (status == "Success") {
+            bitmap = null
+            activity?.let {
+                view?.run {
+                    if (checkLogin()) {
+                        it.rememberUser(
+                            usernameEdt.text.toString(),
+                            passwordEdt.text.toString(),
+                            true
+                        )
+                    } else {
+                        it.rememberUser(
+                            usernameEdt.text.toString(),
+                            passwordEdt.text.toString(),
+                            false
+                        )
                     }
 
-                    val manager = it.supportFragmentManager
-                    val fragment =
-                        manager.findFragmentById(R.id.mainFrameLayout)
-                    if (fragment is ContainerFragment) {
-                        it.loadNoBackStackContainer(ProfileFragment.getInstance())
-                        fragment.invalidateOptionsMenuOnSuccessEdit()
-                        it.showSnackBarMsg(status)
-                    }
+                    usernameEdt.text.clear()
+                    passwordEdt.text.clear()
+                    confirm_passwordEdt.text.clear()
+                    full_nameEdt.text.clear()
+                    birthEdt.text.clear()
+                    phoneEdt.text.clear()
+                    addressEdt.text.clear()
                 }
-            }
-            "" -> null
-            else -> {
-                activity?.showSnackBarMsg(status)
+
+                val manager = it.supportFragmentManager
+                val fragment =
+                    manager.findFragmentById(R.id.mainFrameLayout)
+                if (fragment is ContainerFragment) {
+                    it.loadNoBackStackContainer(ProfileFragment.instance)
+                    fragment.invalidateOptionsMenuOnSuccessEdit()
+                    it.showSnackBarMsg(status)
+                }
             }
         }
     }
@@ -121,6 +116,8 @@ class EditProfileFragment private constructor() : Fragment(), EditProfileContrac
                     .with(avatar)
                     .load(Constant.BASE_URL + Constant.BASE_URL_IMAGE + user.image_path)
                     .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.NONE )
+                    .skipMemoryCache(true)
                     .into(avatar)
             }
 

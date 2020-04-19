@@ -42,8 +42,8 @@ class SignUpFragment : Fragment(), SignUpContract.View {
         context?.let {
             val movieRepository: Repository =
                 Repository.getInstance(
-                    RemoteDataSource.getInstance(),
-                    LocalDataSource.getInstance()
+                    RemoteDataSource.instance,
+                    LocalDataSource.instance
                 )
             presenter = SignUpPresenter(movieRepository)
         }
@@ -79,7 +79,7 @@ class SignUpFragment : Fragment(), SignUpContract.View {
                 phoneEdt.text.clear()
                 addressEdt.text.clear()
             }
-            activity?.loadNoBackStack(ContainerFragment())
+            activity?.loadNoBackStack(ContainerFragment.instance)
             activity?.showSnackBarMsg(status)
 
         } else {
@@ -293,15 +293,16 @@ class SignUpFragment : Fragment(), SignUpContract.View {
         return false
     }
 
+    private object HOLDER {
+        val INSTANCE = SignUpFragment()
+    }
 
     companion object {
         private const val REQUEST_CODE_CAMERA_IMG = 1
         private const val REQUEST_CODE_PHOTO_IMG = 2
-        private var instance: SignUpFragment? = null
-        fun getInstance() =
-            instance
-                ?: SignUpFragment()
-                    .also { instance = it }
+        val instance: SignUpFragment by lazy {
+            HOLDER.INSTANCE
+        }
     }
 
 }

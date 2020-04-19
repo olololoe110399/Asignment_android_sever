@@ -1,6 +1,7 @@
 package a.com.fpolyshop.utils
 
 import a.com.fpolyshop.R
+import a.com.fpolyshop.screen.home.HomeFragment
 import android.content.Context
 import android.content.SharedPreferences
 import android.text.Editable
@@ -123,4 +124,34 @@ fun FragmentActivity.rememberUser(
         edit.putBoolean("REMEMBER", status)
     }
     edit.apply()
+}
+
+fun FragmentActivity.removeFragmentContainer() {
+    val fragment =
+        supportFragmentManager.findFragmentById(R.id.containerFrameLayout)
+    if (fragment is HomeFragment) supportFragmentManager.beginTransaction()
+        .remove(fragment)
+        .commit()
+}
+
+fun FragmentActivity.loadLeftToRight(fragment: Fragment) {
+    supportFragmentManager.beginTransaction().setCustomAnimations(
+        R.anim.right_to_left,
+        R.anim.exit_right_to_left,
+        R.anim.left_to_right,
+        R.anim.exit_left_to_right
+    ).replace(R.id.mainFrameLayout, fragment)
+        .addToBackStack(null)
+        .commit()
+}
+
+fun FragmentActivity.loadRightToLeft(fragment: Fragment) {
+    supportFragmentManager.beginTransaction().setCustomAnimations(
+        R.anim.left_to_right,
+        R.anim.exit_left_to_right,
+        R.anim.right_to_left,
+        R.anim.exit_right_to_left
+    ).replace(R.id.mainFrameLayout, fragment)
+        .addToBackStack(null)
+        .commit()
 }

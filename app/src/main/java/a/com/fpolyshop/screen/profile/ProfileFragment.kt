@@ -14,6 +14,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 
 class ProfileFragment private constructor() : Fragment(), ProfileContract.View {
@@ -27,8 +29,8 @@ class ProfileFragment private constructor() : Fragment(), ProfileContract.View {
         context?.let {
             val movieRepository: Repository =
                 Repository.getInstance(
-                    RemoteDataSource.getInstance(),
-                    LocalDataSource.getInstance()
+                    RemoteDataSource.instance,
+                    LocalDataSource.instance
                 )
             presenter = ProfilePresenter(movieRepository)
         }
@@ -58,14 +60,12 @@ class ProfileFragment private constructor() : Fragment(), ProfileContract.View {
                 Toast.makeText(it, message, Toast.LENGTH_SHORT).show()
             }
         }
+        initRefresh()
     }
 
     override fun onStatusSuccess(status: String) {
-        when (status) {
-            "" -> ""
-            else -> {
-                activity?.showSnackBarMsg(status)
-            }
+        if (status != "") {
+            activity?.showSnackBarMsg(status)
         }
     }
 
@@ -80,6 +80,8 @@ class ProfileFragment private constructor() : Fragment(), ProfileContract.View {
             GlideApp
                 .with(avatar)
                 .load(Constant.BASE_URL + Constant.BASE_URL_IMAGE + user.image_path)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .centerCrop()
                 .into(avatar)
         }
@@ -102,15 +104,43 @@ class ProfileFragment private constructor() : Fragment(), ProfileContract.View {
         }
     }
 
+    private fun initRefresh() {
+        view?.homeSwipeRefresh?.setOnRefreshListener {
+            activity?.let {
+                val userNameSp = it.getSharedPreferences(
+                    "USER_FILE",
+                    Context.MODE_PRIVATE
+                ).getString("USERNAME", "")
+                val passwordSp = it.getSharedPreferences(
+                    "USER_FILE",
+                    Context.MODE_PRIVATE
+                ).getString("PASSWORD", "")
+                if (NetworkUtil.isConnectedToNetwork(it)) {
+                    if (userNameSp != null && passwordSp != null) {
+                        homeSwipeRefresh.isRefreshing = false
+                        presenter.getProfile(userNameSp, passwordSp)
+                    }
+                } else {
+                    homeSwipeRefresh.isRefreshing = false
+                    onLoading(false)
+                    val message = getString(R.string.check_internet_fail)
+                    Toast.makeText(it, message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
     fun getUserProfile(): User? {
         return profile
     }
 
+    private object HOLDER {
+        val INSTANCE = ProfileFragment()
+    }
+
     companion object {
-        private var instance: ProfileFragment? = null
-        fun getInstance() =
-            instance
-                ?: ProfileFragment()
-                    .also { instance = it }
+        val instance: ProfileFragment by lazy {
+            HOLDER.INSTANCE
+        }
     }
 }

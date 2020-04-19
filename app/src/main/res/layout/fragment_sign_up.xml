@@ -111,7 +111,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_45"
                 android:layout_marginStart="@dimen/dp_30"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="@dimen/dp_8"
                 android:layout_marginEnd="@dimen/dp_30"
                 android:background="@drawable/radius_edt"
                 android:drawableStart="@drawable/ic_today_black_24dp"
@@ -171,8 +171,9 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         android:textColor="@android:color/white"
         android:id="@+id/registerBtn"
         android:layout_width="match_parent"

@@ -24,8 +24,8 @@ class SignInFragment : Fragment(), SignInContract.View {
         context?.let {
             val movieRepository: Repository =
                 Repository.getInstance(
-                    RemoteDataSource.getInstance(),
-                    LocalDataSource.getInstance()
+                    RemoteDataSource.instance,
+                    LocalDataSource.instance
                 )
             presenter = SignInPresenter(movieRepository)
         }
@@ -44,12 +44,14 @@ class SignInFragment : Fragment(), SignInContract.View {
         }
     }
 
+    private object HOLDER {
+        val INSTANCE = SignInFragment()
+    }
+
     companion object {
-        private var instance: SignInFragment? = null
-        fun getInstance() =
-            instance
-                ?: SignInFragment()
-                    .also { instance = it }
+        val instance: SignInFragment by lazy {
+            HOLDER.INSTANCE
+        }
     }
 
     override fun onSignInUserSuccess(status: String) {
@@ -61,9 +63,11 @@ class SignInFragment : Fragment(), SignInContract.View {
                     checkPass.isChecked
                 )
             }
-            activity?.loadNoBackStack(ContainerFragment())
-            activity?.showSnackBarMsg(status)
-
+            activity?.run {
+                removeFragmentContainer()
+                ContainerFragment.startingPosition = 0
+                activity?.loadNoBackStack(ContainerFragment.instance)
+            }
         } else {
             activity?.showSnackBarMsg(status)
         }

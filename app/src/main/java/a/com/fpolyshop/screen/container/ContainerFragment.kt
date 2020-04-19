@@ -6,18 +6,20 @@ import a.com.fpolyshop.screen.edit_profile.EditProfileFragment
 import a.com.fpolyshop.screen.home.HomeFragment
 import a.com.fpolyshop.screen.login.LoginFragment
 import a.com.fpolyshop.screen.profile.ProfileFragment
+import a.com.fpolyshop.screen.sreach.SearchFragment
+import a.com.fpolyshop.utils.loadLeftToRight
 import a.com.fpolyshop.utils.loadNoBackStack
 import a.com.fpolyshop.utils.showSnackBar
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.fragment_container.view.*
 import kotlinx.android.synthetic.main.toolbar_main.view.*
 
-class ContainerFragment : Fragment() {
-    private var startingPosition = 0
+class ContainerFragment private constructor() : Fragment() {
     private var changeMenu = 1
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,19 +34,22 @@ class ContainerFragment : Fragment() {
         setHasOptionsMenu(true)
         view.navigationView.setOnNavigationItemSelectedListener(selectedListener)
         initToolBar()
-        loadFragment(HomeFragment(), 0)
+        loadFragment(HomeFragment.instance, 0)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         when (changeMenu) {
+            0 -> {
+                inflater.inflate(R.menu.home, menu)
+            }
             1 -> {
                 inflater.inflate(R.menu.home, menu)
             }
             2 -> {
                 inflater.inflate(R.menu.profile, menu)
             }
-            else -> {
+            3 -> {
                 inflater.inflate(R.menu.save_profile, menu)
             }
         }
@@ -58,6 +63,7 @@ class ContainerFragment : Fragment() {
                 manager.findFragmentById(R.id.containerFrameLayout)
             when (item.itemId) {
                 R.id.search_home -> {
+                    activity?.loadLeftToRight(SearchFragment.instance)
                 }
                 R.id.aboutUs -> {
                 }
@@ -65,7 +71,7 @@ class ContainerFragment : Fragment() {
                     val edit = getSharedPreferences("USER_FILE", Context.MODE_PRIVATE).edit()
                     edit.clear()
                     edit.apply()
-                    activity?.loadNoBackStack(LoginFragment())
+                    activity?.loadNoBackStack(LoginFragment.instance)
                 }
                 R.id.edit -> {
                     if (fragment is ProfileFragment) {
@@ -86,7 +92,7 @@ class ContainerFragment : Fragment() {
                 }
                 R.id.cancel -> {
                     if (fragment is EditProfileFragment) {
-                        loadFragment(ProfileFragment.getInstance(), 2)
+                        loadFragment(ProfileFragment.instance, 2)
                     } else {
                         showSnackBar(R.string.pls_slow)
                     }
@@ -102,49 +108,54 @@ class ContainerFragment : Fragment() {
             changeMenu = 2
             invalidateOptionsMenu()
         }
-
     }
 
     private fun loadFragment(fragment: Fragment, position: Int): Boolean {
-        activity?.run {
+        Log.i("ERROR", "$fragment   $position $startingPosition")
+        activity?.let {
             when {
                 startingPosition > position -> {
-                    supportFragmentManager.beginTransaction().setCustomAnimations(
-                            R.anim.left_to_right,
-                            R.anim.exit_left_to_right,
-                            R.anim.right_to_left,
-                            R.anim.exit_right_to_left
-                        ).replace(R.id.containerFrameLayout, fragment)
+                    it.supportFragmentManager.beginTransaction().setCustomAnimations(
+                        R.anim.left_to_right,
+                        R.anim.exit_left_to_right,
+                        R.anim.right_to_left,
+                        R.anim.exit_right_to_left
+                    ).replace(R.id.containerFrameLayout, fragment)
+                        .addToBackStack(null)
                         .commit()
                 }
                 startingPosition < position -> {
-                    supportFragmentManager.beginTransaction().setCustomAnimations(
-                            R.anim.right_to_left,
-                            R.anim.exit_right_to_left,
-                            R.anim.left_to_right,
-                            R.anim.exit_left_to_right
-                        ).replace(R.id.containerFrameLayout, fragment)
+                    it.supportFragmentManager.beginTransaction().setCustomAnimations(
+                        R.anim.right_to_left,
+                        R.anim.exit_right_to_left,
+                        R.anim.left_to_right,
+                        R.anim.exit_left_to_right
+                    ).replace(R.id.containerFrameLayout, fragment)
+                        .addToBackStack(null)
                         .commit()
                 }
-                else -> {
+                startingPosition == position -> {
                     changeMenu =
                         when (fragment) {
                             is ProfileFragment -> {
                                 2
                             }
                             is EditProfileFragment -> {
-                                0
+                                3
                             }
-                            else -> {
+                            is HomeFragment -> {
                                 1
                             }
+                            else -> 0
                         }
-                    supportFragmentManager.beginTransaction()
+
+                    it.supportFragmentManager.beginTransaction()
                         .replace(R.id.containerFrameLayout, fragment)
+                        .addToBackStack(null)
                         .commit()
                 }
             }
-            invalidateOptionsMenu()
+            it.invalidateOptionsMenu()
         }
         startingPosition = position
         return true
@@ -160,12 +171,12 @@ class ContainerFragment : Fragment() {
         BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.home -> {
-                    loadFragment(HomeFragment(), 1)
+                    loadFragment(HomeFragment.instance, 1)
                     changeMenu = 1
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.profile -> {
-                    loadFragment(ProfileFragment.getInstance(), 2)
+                    loadFragment(ProfileFragment.instance, 2)
                     changeMenu = 2
                     return@OnNavigationItemSelectedListener true
                 }
@@ -173,4 +184,15 @@ class ContainerFragment : Fragment() {
             activity?.invalidateOptionsMenu()
             return@OnNavigationItemSelectedListener false
         }
+
+    private object HOLDER {
+        val INSTANCE = ContainerFragment()
+    }
+
+    companion object {
+        val instance: ContainerFragment by lazy {
+            HOLDER.INSTANCE
+        }
+        var startingPosition = 0
+    }
 }

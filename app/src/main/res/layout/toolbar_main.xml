@@ -2,6 +2,7 @@
 
 <com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/appBar"
+    android:background="@android:color/white"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:fitsSystemWindows="true">
@@ -76,7 +77,7 @@
                 android:fontFamily="@font/ubuntur"
                 android:scaleType="centerCrop"
                 android:text=" Shop"
-                android:textColor="@android:color/black"
+                android:textColor="@color/colorDarkBlue"
                 android:textSize="@dimen/sp_18" />
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>

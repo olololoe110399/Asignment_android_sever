@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Poly shop</string>
+    <string name="app_name">FPoly Shop</string>
     <string name="title_yes">Yes</string>
     <string name="title_no">No</string>
     <string name="title_exit_app">Exit the application</string>
@@ -49,4 +49,19 @@
     <string name="login_success">Login Success</string>
     <string name="log_out">Log out</string>
     <string name="about_us">About us</string>
+    <string name="genre">Genre ></string>
+    <string name="hot">Hot ></string>
+    <string name="good_price"><![CDATA[Good Price >]]></string>
+    <string name="vote_text">0.0</string>
+    <string name="top_rated"><![CDATA[Top Rated >]]></string>
+    <string name="promotion"><![CDATA[Promotion >]]></string>
+    <string name="release_date">Release date</string>
+    <string name="vote">Votes</string>
+    <string name="favorite">Favorite</string>
+    <string name="categories">Categories</string>
+    <string name="genres">Genres</string>
+    <string name="production_companies">Production companies</string>
+    <string name="overview">OverView</string>
+    <string name="search">Search</string>
+    <string name="price_string">%1$d VND</string>
 </resources>
