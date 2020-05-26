@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_light_gray">
+
+    <include layout="@layout/toolbar_base" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/searchSwipeRefresh"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/genresTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:padding="@dimen/dp_8"
+                android:text="@string/genres"
+                android:textColor="@android:color/background_dark"
+                android:textSize="@dimen/sp_18"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/genresChipGroup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:paddingStart="@dimen/dp_16"
+                android:paddingTop="@dimen/dp_8"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingBottom="@dimen/dp_8"
+                app:chipSpacing="@dimen/dp_8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/genresTextView"
+                app:singleSelection="true" />
+            <FrameLayout
+                android:id="@+id/genresProgressBar"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/color_light_gray"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/genresChipGroup"
+                app:layout_constraintEnd_toEndOf="@+id/genresChipGroup"
+                app:layout_constraintStart_toStartOf="@+id/genresChipGroup"
+                app:layout_constraintTop_toTopOf="@+id/genresChipGroup">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminateTint="@color/colorOrange" /></FrameLayout>
+
+            <TextView
+                android:id="@+id/categoriesTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:background="@android:color/white"
+                android:padding="@dimen/dp_8"
+                android:text="@string/categories"
+                android:textColor="@android:color/background_dark"
+                android:textSize="@dimen/sp_18"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/genresChipGroup"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/categoriesRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/dp_5"
+                android:paddingTop="@dimen/dp_8"
+                android:paddingEnd="@dimen/dp_5"
+                android:paddingBottom="@dimen/dp_16"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/categoriesTextView"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <FrameLayout
+                android:id="@+id/categoriesProgressBar"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/color_light_gray"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/categoriesRecyclerView"
+                app:layout_constraintEnd_toEndOf="@+id/categoriesRecyclerView"
+                app:layout_constraintStart_toStartOf="@+id/categoriesRecyclerView"
+                app:layout_constraintTop_toTopOf="@+id/categoriesRecyclerView">
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminateTint="@color/colorOrange" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/productionCompaniesTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:background="@android:color/white"
+                android:padding="@dimen/dp_8"
+                android:text="@string/production_companies"
+                android:textColor="@android:color/background_dark"
+                android:textSize="@dimen/sp_18"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/categoriesRecyclerView"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/productionCompaniesRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/dp_5"
+                android:paddingTop="@dimen/dp_8"
+                android:paddingEnd="@dimen/dp_5"
+                android:paddingBottom="@dimen/dp_16"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/productionCompaniesTextView"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <FrameLayout
+                android:id="@+id/productionCompaniesProgressBar"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/color_light_gray"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/productionCompaniesRecyclerView"
+                app:layout_constraintEnd_toEndOf="@+id/productionCompaniesRecyclerView"
+                app:layout_constraintStart_toStartOf="@+id/productionCompaniesRecyclerView"
+                app:layout_constraintTop_toTopOf="@+id/productionCompaniesRecyclerView">
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminateTint="@color/colorOrange" />
+            </FrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

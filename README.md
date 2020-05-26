@@ -1,1 +1,3 @@
-# Asignment_android_sever
+# FPoly Shop App 
++ MVP + Kotlin
++ Screenshots APP
