@@ -1,3 +1,6 @@
 # FPoly Shop App 
 + MVP + Kotlin
 + Screenshots APP
+
+
++ <img src="https://github.com/olololoe110399/Asignment_android_sever/blob/master/screen_short/Screenshot_01.png" width="200"><img src="https://github.com/olololoe110399/Asignment_android_sever/blob/master/screen_short/Screenshot_02.png" width="200"><img src="https://github.com/olololoe110399/Asignment_android_sever/blob/master/screen_short/Screenshot_03.png" width="200"><img src="https://github.com/olololoe110399/Asignment_android_sever/blob/master/screen_short/Screenshot_04.png" width="200"><img src="https://github.com/olololoe110399/Asignment_android_sever/blob/master/screen_short/Screenshot_05.png" width="200"><img src="https://github.com/olololoe110399/Asignment_android_sever/blob/master/screen_short/Screenshot_06.png" width="200"><img src="https://github.com/olololoe110399/Asignment_android_sever/blob/master/screen_short/Screenshot_07.png" width="200"><img src="https://github.com/olololoe110399/Asignment_android_sever/blob/master/screen_short/Screenshot_08.png" width="200"><img src="https://github.com/olololoe110399/Asignment_android_sever/blob/master/screen_short/Screenshot_09.png" width="200"><img src="https://github.com/olololoe110399/Asignment_android_sever/blob/master/screen_short/Screenshot_10.png" width="200">
